@@ -63,7 +63,7 @@ const Login = () => {
                 <Link to="/debtlist">
                 <button type="submit">Giriş Yap</button>
                 </Link>
-                
+                <strong>Direkt butona basabilirsiniz</strong>
               </Form>
             </div>
           </div>

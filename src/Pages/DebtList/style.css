@@ -1,10 +1,13 @@
 #acrbutton{
     height: 30px;
     width: 30px;
+    background-color: rgb(204, 203, 203);
+    border: 1px;
 }
 #acrbutton2{
     height: 30px;
     width: 30px;
+    background-color: rgb(204, 203, 203);
 }
 
 #debtlist li:nth-child(odd) {

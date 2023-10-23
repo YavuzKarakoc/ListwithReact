@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { debtListData } from "../../services/Data/data1";
-import "../DebtList/style.css"
+import "../DebtList/style.css";
 
 const DebtList = () => {
   const [openSections, setOpenSections] = useState({});
@@ -110,86 +110,106 @@ const DebtList = () => {
     <>
       <h1 className="mb-5">Listeler Sayfamız</h1>
 
-      <div className="d-flex justify-content-center">
-        <div className="col-4 ">
-          <ul className="list_body w-100" id="debtlist">
-            {ustKirimlar.map((mainAccount, index) => (
-              <li key={index} style={{ listStyleType: "none" }} className="col-12 row w-100">
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-md-8">
+            <ul className="list_body w-100"></ul>
+            <ul className="list_body w-100" id="debtlist">
+              <li className="list-group-item bg-secondary  ">
+                <div className="d-flex">
+                  <div className="col-2"></div>
                 
-                <div className="col-2">
-                <button
-                  className={` ${
-                    openSections[mainAccount.hesap_kodu] ? "active" : ""
-                  }`}
-                  onClick={() => toggleSection(mainAccount.hesap_kodu)}
-                  id="acrbutton"
-                >
-                  {openSections[mainAccount.hesap_kodu] ? "-" : "+"}
-                </button>
+                <div className="col-5 d-flex justify-content-center">
+                  Hesap Kodu
                 </div>
                 <div className="col-5 d-flex justify-content-center">
-                {mainAccount.hesap_kodu} 
+                  Toplam Borç
                 </div>
-                <div className="col-5 d-flex justify-content-center">
-                {mainAccount.borc} 
                 </div>
-               
-                <ul
-                  style={{
-                    display: openSections[mainAccount.hesap_kodu]
-                      ? "block"
-                      : "none",
-                  }}
-                  className="w-100"
-                >
-                  {mainAccount.first_breakdown.map((fb, altIndex) => (
-                    <li key={altIndex} style={{ listStyleType: "none" }} className="col-12 row w-100">
-                      <div className="col-2">
-                      <button
-                        className={`accordion ${
-                          openSections[fb.hesap_kodu] ? "active" : ""
-                        }`+ "acrbutton"}
-                        onClick={() => toggleSection(fb.hesap_kodu)}
-                        id="acrbutton2"
-                      >
-                        {openSections[fb.hesap_kodu] ? "-" : "+"}
-                      </button>
-                      </div>
-                      <div className="col-5 col-5 d-flex justify-content-center">
-                       {fb.hesap_kodu}
-                      </div>
-                      <div className="col-5 col-5 d-flex justify-content-center">
-                      {fb.borc}
-                      </div>
-                      
-                      
-                      <ul
-                        style={{
-                          display: openSections[fb.hesap_kodu]
-                            ? "block"
-                            : "none",
-                        }}
-                        className="w-100"
-                      >
-                        {fb.second_breakdown.map((sb, altIndex) => (
-                          <li key={altIndex} style={{ listStyleType: "none" }} className="col-12 row w-100">
-                            <div className="col-2"></div>
-                            <div className="col-5 d-flex justify-content-center">
-                            {sb.hesap_kodu}
-                            </div>
-                            <div className="col-5 d-flex justify-content-center">
-                            {sb.borc}
-                            </div>
-                             
-                          </li>
-                        ))}
-                      </ul>
-                    </li>
-                  ))}
-                </ul>
               </li>
-            ))}
-          </ul>
+
+              {ustKirimlar.map((mainAccount, index) => (
+                <li key={index} className="list-group-item w-100">
+                  <div className="d-flex">
+                    <div className="col-2">
+                      <button
+                        className={`btn ${
+                          openSections[mainAccount.hesap_kodu] ? "-" : "+"
+                        }`}
+                        onClick={() => toggleSection(mainAccount.hesap_kodu)}
+                        id="acrbutton"
+                      >
+                        {openSections[mainAccount.hesap_kodu] ? "-" : "+"}
+                      </button>
+                    </div>
+                    <div className="col-5 d-flex justify-content-center">
+                      {mainAccount.hesap_kodu}
+                    </div>
+                    <div className="col-5 d-flex justify-content-center">
+                      {mainAccount.borc}
+                    </div>
+                  </div>
+                  <ul
+                    style={{
+                      display: openSections[mainAccount.hesap_kodu]
+                        ? "block"
+                        : "none",
+                    }}
+                    className="w-100 list-group"
+                  >
+                    {mainAccount.first_breakdown.map((fb, altIndex) => (
+                      <li key={altIndex} className="list-group-item w-100">
+                        <div className="d-flex">
+                          <div className="col-2">
+                            <button
+                              className={`btn ${
+                                openSections[fb.hesap_kodu] ? "-" : "+"
+                              }`}
+                              onClick={() => toggleSection(fb.hesap_kodu)}
+                              id="acrbutton2"
+                            >
+                              {openSections[fb.hesap_kodu] ? "-" : "+"}
+                            </button>
+                          </div>
+                          <div className="col-5 d-flex justify-content-center">
+                            {fb.hesap_kodu}
+                          </div>
+                          <div className="col-5 d-flex justify-content-center">
+                            {fb.borc}
+                          </div>
+                        </div>
+                        <ul
+                          style={{
+                            display: openSections[fb.hesap_kodu]
+                              ? "block"
+                              : "none",
+                          }}
+                          className="w-100 list-group"
+                        >
+                          {fb.second_breakdown.map((sb, subAltIndex) => (
+                            <li
+                              key={subAltIndex}
+                              className="list-group-item w-100"
+                            >
+                              <div className="d-flex">
+                                <div className="col-2"></div>
+                                <div className="col-5 d-flex justify-content-center">
+                                  {sb.hesap_kodu}
+                                </div>
+                                <div className="col-5 d-flex justify-content-center">
+                                  {sb.borc}
+                                </div>
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </>
