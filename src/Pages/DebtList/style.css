@@ -1,0 +1,33 @@
+#acrbutton{
+    height: 30px;
+    width: 30px;
+}
+#acrbutton2{
+    height: 30px;
+    width: 30px;
+}
+
+#debtlist li:nth-child(odd) {
+  background-color: darkgray; 
+}
+
+#debtlist li:nth-child(even) {
+  background-color: lightgray; 
+}
+
+
+/* #zebra-list > li > ul > li:nth-child(odd) {
+  background-color: lightgray; 
+}
+
+#zebra-list > li > ul > li:nth-child(even) {
+  background-color: darkgray; 
+}
+#zebra-list > li > ul > li> ul> li:nth-child(odd) {
+    background-color: lightgray; 
+  }
+  
+  #zebra-list > li > ul >li> ul> li:nth-child(even) {
+    background-color: darkgray; 
+  } */
+  
