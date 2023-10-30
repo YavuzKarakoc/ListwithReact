@@ -1,45 +1,75 @@
 import React from "react";
 import { Formik, Field, Form } from "formik";
 import "../Login/style.css";
-import {Link} from "react-router-dom"
-
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const Login = () => {
 
-    let username=""
-    let password=""
-  const login = (loginModel) => {
-    console.log(loginModel);
-    const credentials = `${loginModel.userName}:${loginModel.userPassword}`;
+  const navigate = useNavigate();
+  const product22=[]
+  const apigetrequest = () => {
+    fetch("http://localhost:3000/", {
+      method:"GET",
+      headers:{
+        "Content-Type": "application/json"
+      },
+    }).then(response => response.json())
+    .then((response)=> console.log(response.fkdata))
+    .catch((error)=>{console.log("front-başarısız")})
 
-    const base64Credentials = btoa(credentials);
-
-    const requestBody = JSON.stringify({ username, password });
-
-    fetch('https://efatura.etrsoft.com/fmi/data/v1/databases/testdb/sessions', {
-        method: 'POST', // POST veya diğer HTTP yöntemleri
-        headers: {
-          'Authorization': `Basic ${base64Credentials}`,
-          'Content-Type': 'application/json', 
-        },
-        body: {},
-      })
-        .then(response => response.json())
-        .then(data => {
-          this.setState({ response: data });
-        })
-        .catch(error => {
-          console.error('Hata:', error);
-        });
   };
+
+  const getDebtlist = () =>{
+    const token = "123123213213"
+    fetch("http://localhost:3000/api/debtlist", {
+      method:"GET",
+      headers:{
+        "Content-Type": "application/json"
+      },
+    }).then(response => response.json())
+    .then((response)=> console.log(response))
+    .catch((error)=>{console.log("deblist isteği front-end de başarısız")})
+  }
+
+  const _login=async (loginModel) =>{
+    const username = loginModel.userName;
+    const password = loginModel.userPassword;
+    
+   await fetch('https://localhost:44374/Home/GetToken', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        localStorage.setItem('token', data.response.token);
+        navigate('/debtlist', {replace:true})
+       
+      })
+      .catch(error => {
+        console.error('Hata:', error);
+      });
+
+      return <Navigate to="/debtlist" replace />
+  }
 
   return (
     <div>
       <div>
+        {/* <div>
+        <button className="btn btn-primary mt-4" onClick={apigetrequest}>Deneme Get isteği için bas</button>
+        </div>
+        <div>
+        <button className="btn btn-success mt-3" onClick={getDebtlist}>İstek atıp Verileri çekmek için tıkla</button>
+        </div> */}
         <Formik
           initialValues={{ userName: "", userPassword: "" }}
           onSubmit={async (values) => {
-            login(values);
+           await _login(values);
+          
           }}
         >
           <div className="login">
@@ -60,10 +90,12 @@ const Login = () => {
                   placeholder="Şifrenizi Girin"
                   className="form-control"
                 />
-                <Link to="/debtlist">
+                
                 <button type="submit">Giriş Yap</button>
+                <Link to="/debtlist">
+                
                 </Link>
-                <strong>Direkt butona basabilirsiniz</strong>
+                
               </Form>
             </div>
           </div>
@@ -74,8 +106,6 @@ const Login = () => {
 };
 
 export default Login;
-
-
 
 // import React, { useState } from 'react';
 

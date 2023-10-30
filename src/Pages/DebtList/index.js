@@ -1,10 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { debtListData } from "../../services/Data/data1";
 import "../DebtList/style.css";
 
 const DebtList = () => {
   const [openSections, setOpenSections] = useState({});
-  const debtlistshow = JSON.parse(debtListData.response.scriptResult);
+  const [datam, setdatam] = useState([])
+  // const debtlistshow = JSON.parse(debtListData.response.scriptResult);
+  
+  const getDebtlist =async () =>{
+    const token =await  localStorage.getItem('token');
+    fetch("https://localhost:44374/Home/GetList", {
+      method:"PATCH",
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ token })
+    }).then(response => response.json())
+    .then((response)=> {setdatam(JSON.parse(response.response.scriptResult))})
+    .catch((error)=>{console.log("deblist isteği front-end de başarısız")})
+    console.log(datam)
+    
+  }
+  useEffect(() => {
+    getDebtlist(); 
+  }, []);  
+  const debtlistshow = [...datam];
 
   const data = JSON.parse(JSON.stringify(debtlistshow));
   function calculateFirstBreakdown(data) {
@@ -54,7 +74,7 @@ const DebtList = () => {
     return 0;
   });
 
-  console.log(secondBreakdown);
+  
 
   const thirdBreakdown = [...FirstBreakdown, ...debtlistshow];
 
@@ -95,7 +115,7 @@ const DebtList = () => {
       f.second_breakdown = secondBreakdown2.filter((a) =>
         a.hesap_kodu.startsWith(f.hesap_kodu + ".")
       );
-      console.log(firstBreakdown);
+      
     });
   });
 
@@ -109,7 +129,9 @@ const DebtList = () => {
   return (
     <>
       <h1 className="mb-5">Listeler Sayfamız</h1>
-
+      <div>
+        <button className="btn btn-success mt-3" onClick={getDebtlist}>İstek atıp Verileri çekmek için tıkla</button>
+        </div>
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-md-8">
