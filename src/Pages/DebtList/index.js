@@ -9,8 +9,8 @@ const DebtList = () => {
   
   const getDebtlist =async () =>{
     const token =await  localStorage.getItem('token');
-    fetch("https://localhost:44374/Home/GetList", {
-      method:"PATCH",
+    fetch("http://localhost:3000/api/debtlist", {
+      method:"POST",
       headers:{
         "Content-Type": "application/json"
       },

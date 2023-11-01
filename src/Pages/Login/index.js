@@ -6,7 +6,6 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 const Login = () => {
 
   const navigate = useNavigate();
-  const product22=[]
   const apigetrequest = () => {
     fetch("http://localhost:3000/", {
       method:"GET",
@@ -19,23 +18,39 @@ const Login = () => {
 
   };
 
-  const getDebtlist = () =>{
-    const token = "123123213213"
-    fetch("http://localhost:3000/api/debtlist", {
-      method:"GET",
-      headers:{
-        "Content-Type": "application/json"
-      },
-    }).then(response => response.json())
-    .then((response)=> console.log(response))
-    .catch((error)=>{console.log("deblist isteği front-end de başarısız")})
-  }
+
+
+  // .net core için ayarlanmış başarılı login isteği
+  // const _login=async (loginModel) =>{
+  //   const username = loginModel.userName;
+  //   const password = loginModel.userPassword;
+    
+  //  await fetch('https://localhost:44374/Home/GetToken', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({ username, password }),
+  //   })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       console.log(data);
+  //       localStorage.setItem('token', data.response.token);
+  //       navigate('/debtlist', {replace:true})
+       
+  //     })
+  //     .catch(error => {
+  //       console.error('Hata:', error);
+  //     });
+
+  //     return <Navigate to="/debtlist" replace />
+  // }
 
   const _login=async (loginModel) =>{
     const username = loginModel.userName;
     const password = loginModel.userPassword;
     
-   await fetch('https://localhost:44374/Home/GetToken', {
+   await fetch('http://localhost:3000/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -61,9 +76,6 @@ const Login = () => {
       <div>
         {/* <div>
         <button className="btn btn-primary mt-4" onClick={apigetrequest}>Deneme Get isteği için bas</button>
-        </div>
-        <div>
-        <button className="btn btn-success mt-3" onClick={getDebtlist}>İstek atıp Verileri çekmek için tıkla</button>
         </div> */}
         <Formik
           initialValues={{ userName: "", userPassword: "" }}
