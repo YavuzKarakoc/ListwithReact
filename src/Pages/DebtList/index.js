@@ -9,7 +9,7 @@ const DebtList = () => {
   
   const getDebtlist =async () =>{
     const token =await  localStorage.getItem('token');
-    fetch("http://localhost:3000/api/debtlist", {
+    fetch("https://listwith-node.vercel.app/api/debtlist", {
       method:"POST",
       headers:{
         "Content-Type": "application/json"
